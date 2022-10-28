@@ -194,6 +194,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //DARI SPATIE
+        Spatie\Permission\PermissionServiceProvider::class,
+        //YAJRA
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 

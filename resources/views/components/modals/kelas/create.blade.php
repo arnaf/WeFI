@@ -16,9 +16,9 @@
                   @enderror
             </div>
             <div class="form-group mt-3 mb-3">
-                <label for="nama">Judul Kelas</label>
-                <input type="text" class="form-control" id="nama" name="nama">
-                @error('nama')
+                <label for="judulkelas">Judul Kelas</label>
+                <input type="text" class="form-control" id="judulkelas" name="judulkelas">
+                @error('judulkelas')
                   <span class="text-danger">{{$message}}</span>
                 @enderror
             </div>

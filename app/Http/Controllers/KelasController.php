@@ -89,7 +89,7 @@ class KelasController extends Controller
                 'status'    => false
             ];
 
-        } if($request->nama == NULL) {
+        } if($request->judulkelas == NULL) {
             $json = [
                 'msg'       => 'Mohon masukan judul kelas',
                 'status'    => false
@@ -132,7 +132,7 @@ class KelasController extends Controller
                     Kelas::create([
                         'gambar'       => $gambar,
                         'kode'         => $request->kode,
-                        'nama'         => $request->nama,
+                        'judulkelas'         => $request->judulkelas,
                         'kategori_id'  => $request->kategorikelas,
                         'pengajar'     => $request->pengajar,
                         'harga'        => $request->harga,
@@ -174,7 +174,7 @@ class KelasController extends Controller
                 'status'    => false
             ];
 
-        } if($request->namaEdit == NULL) {
+        } if($request->judulkelasEdit == NULL) {
             $json = [
                 'msg'       => 'Mohon masukan judul kelas',
                 'status'    => false
@@ -222,7 +222,7 @@ class KelasController extends Controller
                 $kelas = Kelas::where('id', $id)->update([
                     'gambar'       => $gambarEdit,
                     'kode'         => $request->kodeEdit,
-                    'nama'         => $request->namaEdit,
+                    'judulkelas'         => $request->judulkelasEdit,
                     'kategori_id'  => $request->kategorikelasEdit,
                     'pengajar'     => $request->pengajarEdit,
                     'harga'        => $request->hargaEdit,

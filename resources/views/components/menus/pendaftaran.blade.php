@@ -13,23 +13,23 @@
                 <h5 class="card-title">Form Pendaftaran Bimbel</h5>
 
                 <!-- General Form Elements -->
-                <form id="createForm">
+                <form action="{{ route('tagihan') }}" method="POST">
                 {{-- <div class="modal" tabindex="-1" role="dialog" id="createModal"> --}}
-
+                    @csrf
                     <div class="row mb-3">
                         <label for="invoiceMember" class="col-sm-2 col-form-label">No. Invoice</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="invoiceMember" name="invoiceMember">
+                          <input type="text" class="form-control" id="invoiceMember" value="{{ $invoice }}" name="invoiceMember" required readonly>
                         </div>
                     </div>
 
                   <div class="row mb-3">
                     <label for="namaMember" class="col-sm-2 col-form-label">Nama Pendaftar</label>
                     <div class="col-sm-10">
-                        <select name="namaMember" id="namaMember" class="form-control">
+                        <select name="namaMember" id="namaMember" class="form-control" required>
                             <option value="" selected disabled>Pilih Member</option>
                             @foreach($members as $m)
-                                <option value="{{ $m->id }}">{{ $m->nama }}</option>
+                                <option value="{{ $m->id }}" >{{ $m->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -45,10 +45,10 @@
                   <div class="row mb-3">
                     <label for="kelasMember" class="col-sm-2 col-form-label">Kelas Dipilih</label>
                     <div class="col-sm-10">
-                        <select name="kelasMember" id="kelasMember" class="form-control">
+                        <select name="kelasMember" id="kelasMember" class="form-control" required>
                             <option value="" selected disabled>Pilih kelas</option>
                             @foreach($kelases as $k)
-                                <option value="{{ $k->id }}">{{ $k->nama }}</option>
+                                <option value="{{ $k->id }}" >{{ $k->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -71,13 +71,13 @@
                   <div class="row mb-3">
                     <label for="metodeMember" class="col-sm-2 col-form-label">Metode Pembayaran</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="metodeMember" name="metodeMember">
+                      <input type="text" class="form-control" id="metodeMember" name="metodeMember" required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <div class="col-sm-10">
-                        <button type="button" class="btn btn-primary" id="createSubmit">Daftar</button>
+                        <button type="submit" class="btn btn-primary">Daftar</button>
                     </div>
                   </div>
 
@@ -100,10 +100,12 @@
     </section>
 
     <!-- /.content -->
-    @push('script')
+        @push('script')
       @include('components.scripts.datatables')
       @include('components.scripts.sweetalert')
-      @include($script)
+      @include('components.scripts.pendaftaran')
+      @include('components.scripts.tagihan')
+      {{-- @include($script) --}}
     @endpush
   </section>
 

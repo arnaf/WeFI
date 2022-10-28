@@ -112,7 +112,7 @@
                     { data: 'DT_RowIndex', orderable: false, searchable: false},
                     { data: 'invoice', name:'tagihans.invoice'},
                     { data: 'nama', name:'users.nama'},
-                    { data: 'nama', name:'kelass.nama'},
+                    { data: 'judulkelas', name:'kelass.judulkelas'},
                     { data: 'harga', name:'kelass.harga'},
                     { data: 'action', orderable: false, searchable: false},
                 ]
@@ -121,50 +121,7 @@
 
 
 
-        $('#createSubmit').click(function (e) {
-            e.preventDefault();
 
-            var formData = $('#createForm').serialize();
-
-            Swal.fire({
-                title: 'Mohon tunggu',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                willOpen: () => {
-                    Swal.showLoading()
-                }
-            });
-
-            $.ajax({
-                type: "post",
-                url: "/tagihan",
-                data: formData,
-                dataType: "json",
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-
-                    Swal.close();
-                    if(data.status) {
-                        Swal.fire(
-                            'Success!',
-                            data.msg,
-                            'success'
-                        )
-
-                        // $('#createModal').modal('hide');
-                        $('#table').DataTable().ajax.reload();
-                    } else {
-                        Swal.fire(
-                            'Error!',
-                            data.msg,
-                            'warning'
-                        )
-                    }
-                }
-            })
-        });
 
         // $('#editSubmit').click(function (e) {
         //     e.preventDefault();

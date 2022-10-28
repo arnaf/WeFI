@@ -19,11 +19,13 @@ class TagihanController extends Controller
 
         $data = [
 
-
+            'invoice'     => uniqid(),
             'members'     => $members,
             'kelases'     => $kelases,
 
         ];
+
+    
 
         return view('components.menus.pendaftaran', $data);
     }
@@ -31,12 +33,17 @@ class TagihanController extends Controller
 
     public function index()
     {
-        $tagihans= DB::table('tagihans')->get();
+
+        $relations = DB::table('tagihans')
+        ->leftjoin('users', 'tagihans.user_id', '=', 'users.id')
+        ->leftJoin('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+        ->get();
+
 
         $data = [
-            'tagihans'    => $tagihans,
+            'relations'   => $relations
         ];
-
+        dd($relations);
         return view('components.menus.tagihan', $data);
 
     }
@@ -75,78 +82,20 @@ class TagihanController extends Controller
     public function store(Request $request)
     {
 
-        if($request == NULL) {
-            $json = [
-                'msg'       => 'Mohon masukan data member',
-                'status'    => false
-            ];
 
-        } if($request->invoiceMember == NULL) {
-            $json = [
-                'msg'       => 'Mohon masukan nomor invoice',
-                'status'    => false
-            ];
+            DB::transaction(function () use ($request) {
+                Tagihan::create([
 
-        } elseif($request->namaMember == NULL){
-            $json = [
-                'msg'       => 'Mohon masukan nama member',
-                'status'    => false
-            ];
-        } elseif($request->alamatMember == NULL){
-            $json = [
-                'msg'       => 'Mohon masukan alamat member',
-                'status'    => false
-            ];
-        } elseif($request->kelasMember == NULL) {
-            $json = [
-                'msg'       => 'Mohon masukan kelas member',
-                'status'    => false
-            ];
-        } elseif($request->namaPengajar == NULL) {
-            $json = [
-                'msg'       => 'Mohon masukan nama pengajar',
-                'status'    => false
-            ];
-        } elseif($request->biayaKelas == NULL) {
-            $json = [
-                'msg'       => 'Mohon masukan biaya kelas',
-                'status'    => false
-            ];
-        } elseif($request->metodeMember == NULL) {
-            $json = [
-                'msg'       => 'Mohon masukan metode pembayaran member',
-                'status'    => false
-            ];
-        }
-        else {
-            try{
+                'invoice'         => $request->invoiceMember,
+                'user_id'         => $request->namaMember,
+                'kelas_id'        => $request->kelasMember,
+                'metode'          => $request->metodeMember,
+                'status'          => 'Belum dibayar',
+                'created_at'      => date('Y-m-d H:i:s')
+                ]);
 
-                DB::transaction(function() use($request) {
-                    $tagihan = Tagihan::create([
-                        'invoice'      => $request->invoiceMember,
-                        'user_id'      => $request->namaMember,
-                        'kelas_id'     => $request->kelasMember,
-                        'status'       => "Belum dibayar",
-                        'metode'       => $request->metodeMember,
-                        'created_at'   => date('Y-m-d H:i:s')
-                    ]);
+            });
 
-
-                });
-
-                $json = [
-                    'msg' => 'Tagihan berhasil ditambahkan',
-                    'status' => true
-                ];
-            } catch(Exception $e) {
-                $json = [
-                    'msg'       => 'error',
-                    'status'    => false,
-                    'e'         => $e
-                ];
-            }
-        }
-        return Response::json($json);
     }
 
 

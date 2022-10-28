@@ -9,7 +9,7 @@ class Tagihan extends Model
 {
     protected $fillable = [
         'user_id',
-        'bimbel_id',
+        'kelas_id',
         'foto',
         'invoice',
         'status',

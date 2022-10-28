@@ -77,7 +77,7 @@
             success: function (response) {
                 // $("#gambarEdit").val(response.gambar);
                 $("#kodeEdit").val(response.kode);
-                $("#namaEdit").val(response.nama);
+                $("#judulkelasEdit").val(response.judulkelas);
                 $("#kategori_idEdit").val(response.kategori_id);
                 $("#pengajarEdit").val(response.pengajar);
                 $("#hargaEdit").val(response.harga);
@@ -112,7 +112,7 @@
                     { data: 'DT_RowIndex', orderable: false, searchable: false},
                     { data: 'gambar', name:'kelass.gambar'},
                     { data: 'kode', name:'kelass.kode'},
-                    { data: 'nama', name:'kelass.nama'},
+                    { data: 'judulkelas', name:'kelass.judulkelas'},
                     { data: 'kategorikelas', name:'kelass.kategori_id'},
                     { data: 'pengajar', name:'kelass.alamat'},
                     { data: 'harga', name:'kelass.harga'},

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kategori_id');
             $table->text('gambar');
-            $table->string('nama');
+            $table->string('judulkelas');
             $table->string('pengajar');
             $table->text('deskripsi');
             $table->string('kode')->unique();

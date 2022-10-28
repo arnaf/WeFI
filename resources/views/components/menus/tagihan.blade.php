@@ -3,56 +3,44 @@
 @section('content')
 <main id="main" class="main">
 
-    <!-- Main content -->
-    <section class="content">
 
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <div class="col-sm-6">
-              <h1>Tagihan</h1>
-            </div>
 
-          <div class="card-tools">
-
-          </div>
-        </div>
+    <div class="card">
         <div class="card-body">
-          <div class="table-responsive">
+          <h5 class="card-title">Table with hoverable rows</h5>
 
-                  {{-- <button type="button" class="my-3 btn btn-primary" onclick="create()">Tambah Member</button> --}}
+          <table class="table table-hover">
 
-              <table class="table table-hover table-striped table-border" id="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Member</th>
+                <th scope="col">Nomor Invoice</th>
+                <th scope="col">Kelas</th>
+                <th scope="col">Jumlah Tagihan</th>
+                <th scope="col">Status</th>
+                <th scope="col">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ( $tagihans as $t)
 
-                  <thead>
-                      <th>#</th>
-                      <th>No Invoice</th>
-                      <th>Nama Member</th>
-                      <th>Kelas</th>
-                      <th>Tagihan</th>
-                      <th>Tindakan</th>
-                  </thead>
-                  <tbody>
-                  </tbody>
-              </table>
-          </div>
+            <?php $i= 1;?>
+            <tr>
+                <th scope="row">{{ $i }}</th>
+                <td>{{ $t->user_id }}</td>
+                <td>{{ $t->invoice }}</td>
+                <td>{{ $t->kelas_id }}</td>
+                <td>2016-05-25</td>
+            </tr>
+
+            @endforeach
+            </tbody>
+          </table>
+          <!-- End Table with hoverable rows -->
+
         </div>
       </div>
-      @include('components.menus.pendaftaran')
-      {{-- @include('components.modals.user.edit') --}}
-      <!-- /.card -->
-
-    </section>
-    <!-- /.content -->
-    @push('script')
-      @include('components.scripts.datatables')
-      @include('components.scripts.sweetalert')
-  
-    @endpush
-  </section>
-
-
-
 
 
 

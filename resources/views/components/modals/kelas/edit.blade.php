@@ -14,8 +14,8 @@
             </div>
 
             <div class="form-group mt-3 mb-3">
-                <label for="namaEdit">Judul Kelas</label>
-                <input type="text" class="form-control" id="namaEdit" name="namaEdit">
+                <label for="judulkelasEdit">Judul Kelas</label>
+                <input type="text" class="form-control" id="judulkelasEdit" name="judulkelasEdit">
             </div>
 
             <div class="form-group mt-3 mb-3">

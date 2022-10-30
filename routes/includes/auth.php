@@ -49,7 +49,7 @@ Route::group([
     Route::post('/tagihan/{id}', [TagihanController::class, 'edit']);
     Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy']);
 
-
+    // Route::post('/tagihan/{id}', [TagihanController::class, 'verification'])->name('verif');
 
 
 

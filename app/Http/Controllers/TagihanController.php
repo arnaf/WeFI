@@ -17,6 +17,7 @@ class TagihanController extends Controller
         $members = DB::table('users')->where('id', '>', 2)->get();
         $kelases = DB::table('kelass')->get();
 
+
         $data = [
 
             'invoice'     => uniqid(),
@@ -25,7 +26,7 @@ class TagihanController extends Controller
 
         ];
 
-    
+
 
         return view('components.menus.pendaftaran', $data);
     }
@@ -37,13 +38,14 @@ class TagihanController extends Controller
         $relations = DB::table('tagihans')
         ->leftjoin('users', 'tagihans.user_id', '=', 'users.id')
         ->leftJoin('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+
         ->get();
 
 
         $data = [
             'relations'   => $relations
         ];
-        dd($relations);
+
         return view('components.menus.tagihan', $data);
 
     }
@@ -95,7 +97,23 @@ class TagihanController extends Controller
                 ]);
 
             });
+                $tagihan = Tagihan::orderBy('created_at', 'desc')
+                ->take(10)
+                ->get();
 
+                return view('components.menus.tagihan', $tagihan);
+
+
+    }
+
+
+    public function verification() {
+
+        DB::transaction(function() {
+            Tagihan::update([
+                'status' => 'Terbayar'
+            ]);
+        });
     }
 
 

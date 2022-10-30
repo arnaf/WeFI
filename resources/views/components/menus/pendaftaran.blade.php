@@ -48,7 +48,7 @@
                         <select name="kelasMember" id="kelasMember" class="form-control" required>
                             <option value="" selected disabled>Pilih kelas</option>
                             @foreach($kelases as $k)
-                                <option value="{{ $k->id }}" >{{ $k->nama }}</option>
+                                <option value="{{ $k->id }}" >{{ $k->judulkelas }}</option>
                             @endforeach
                         </select>
                     </div>

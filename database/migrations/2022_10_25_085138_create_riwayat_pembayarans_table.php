@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tagihan_id');
             $table->foreignId('user_id');
-            $table->foreignId('bimbel_id');
+            $table->foreignId('kelas_id');
             $table->decimal('debit', 14, 2);
             $table->timestamps();
 
             $table->foreign('tagihan_id')->references('id')->on('tagihans')->onDelete('restrict');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
-            $table->foreign('bimbel_id')->references('id')->on('bimbels')->onDelete('restrict');
+            $table->foreign('kelas_id')->references('id')->on('kelass')->onDelete('restrict');
         });
     }
 

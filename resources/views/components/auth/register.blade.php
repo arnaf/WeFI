@@ -23,8 +23,8 @@
                         <div class="card-body">
 
                           <div class="pt-4 pb-2">
-                            <h5 class="card-title text-center pb-0 fs-4">Daftar Member</h5>
-                            <p class="text-center small">We Find Insightness</p>
+                            <h5 class="card-title text-center pb-0 fs-4">Daftar Member WeFI</h5>
+                            <p class="text-center small">We Find Insightness - WeFI</p>
                           </div>
 
                           <form class="row g-3 needs-validation" novalidate action="{{ route('register') }}" method="POST" >
@@ -40,6 +40,11 @@
                               <input type="email" name="email" class="form-control" id="email" required>
                               <div class="invalid-feedback">Masukkan Email valid!</div>
                             </div>
+                            @error('email')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
                             {{-- <div class="col-12">
                               <label for="yourUsername" class="form-label">Username</label>
@@ -55,30 +60,55 @@
                               <input type="password" name="password" class="form-control" id="password" required>
                               <div class="invalid-feedback">Masukkan password Anda!</div>
                             </div>
+                            @error('password')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
                             <div class="col-12">
                                 <label for="nama" class="form-label">Nama Lengkap</label>
                                 <input type="text" name="nama" class="form-control" id="nama" required>
                                 <div class="invalid-feedback">Masukkan nama lengkap Anda!</div>
                             </div>
+                            @error('nama')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
                             <div class="col-12">
                                 <label for="tgl_lhr" class="form-label">Tanggal Lahir</label>
                                 <input type="date" name="tgl_lhr" class="form-control" id="tgl_lhr" required>
                                 <div class="invalid-feedback">Masukkan tanggal lahir Anda!</div>
                             </div>
+                            @error('tgl_lhr')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
                             <div class="col-12">
                                 <label for="tmp_lhr" class="form-label">Tempat Lahir</label>
                                 <input type="text" name="tmp_lhr" class="form-control" id="tmp_lhr" required>
                                 <div class="invalid-feedback">Masukkan tempat lahir Anda!</div>
                             </div>
+                            @error('tmp_lhr')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
                             <div class="col-12">
                                 <label for="alamat" class="form-label">Alamat</label>
                                 <input type="text" name="alamat" class="form-control" id="alamat" required>
                                 <div class="invalid-feedback">Masukkan alamat Anda!</div>
                             </div>
+                            @error('alamat')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
                             <div class="col-12">
                                 <label for="pendidikan"> Pendidikan </label>
@@ -91,6 +121,11 @@
                                     </select>
                                 <div class="invalid-feedback">Masukkan pendidikan Anda saat ini!</div>
                             </div>
+                            @error('pendidikan')
+                            <span class="text-danger" style="display: block;">
+                                {{ $message }}
+                            </span>
+                            @enderror
 
 
                             {{-- <div class="col-12">

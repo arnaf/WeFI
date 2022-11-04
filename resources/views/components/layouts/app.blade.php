@@ -28,6 +28,23 @@
 
         <!-- Template Main CSS File -->
         <link href="{{ asset('css') }}/style.css" rel="stylesheet">
+        <style>
+            .foto {
+                background-color: indigo;
+                color: white;
+                padding: 0.5rem;
+                font-family: sans-serif;
+                border-radius: 0.3rem;
+                cursor: pointer;
+                margin-top: 1rem;
+            }
+            .foto-view {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+        </style>
         @stack('style')
         <!-- =======================================================
         * Template Name: NiceAdmin - v2.4.1
@@ -35,6 +52,8 @@
         * Author: BootstrapMade.com
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
+
+
 </head>
 
 <body>

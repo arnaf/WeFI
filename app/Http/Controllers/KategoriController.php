@@ -36,7 +36,8 @@ class KategoriController extends Controller
             return Response::json($data);
         }
 
-        $data = Kategori::get();
+        $data = Kategori::latest('kategoris.created_at')
+        ->get();
 
         return DataTables::of($data)
 

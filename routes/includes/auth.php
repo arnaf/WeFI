@@ -7,6 +7,8 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TagihanSayaController;
+use App\Http\Controllers\RiwayatSaya;
 
 Route::group([
     'middleware' => 'guest',
@@ -18,9 +20,10 @@ Route::group([
 Route::group([
     'middleware' => 'auth',
 ], function() {
-    Route::get('/dashboard', function () {
-        return view('components.menus.dashboard');
-    });
+    Route::get('/dashboard', [AuthController::class, 'dashboard']);
+
+
+
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
@@ -49,7 +52,29 @@ Route::group([
     Route::post('/tagihan/{id}', [TagihanController::class, 'edit']);
     Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy']);
 
-    // Route::post('/tagihan/{id}', [TagihanController::class, 'verification'])->name('verif');
+
+    // Route::get('/tagihan/{id}', [TagihanController::class, 'show'])->name('tagihan');
+    Route::get('/tagihansaya/{id}', [TagihanSayaController::class, 'indexSaya'])->name('tagihansaya');
+
+
+
+
+
+    Route::post('/bukti/{id}', [TagihanController::class, 'uploadBukti'])->name('bukti');
+    Route::post('/accept/{id}', [TagihanController::class, 'verificationSuccess'])->name('accept');
+    Route::post('/reject/{id}', [TagihanController::class, 'verificationFail'])->name('reject');
+
+    Route::get('/success', [TagihanController::class, 'indexHistorySuccess'])->name('success');
+    Route::get('/fail', [TagihanController::class, 'indexHistoryFail'])->name('fail');
+
+
+
+
+    Route::get('/mysuccess/{id}', [RiwayatSaya::class, 'myindexHistorySuccess'])->name('mysuccess');
+    Route::get('/myfail/{id}', [RiwayatSaya::class, 'myindexHistoryFail'])->name('myfail');
+
+
+
 
 
 

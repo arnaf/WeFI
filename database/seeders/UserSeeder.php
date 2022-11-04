@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
         ]);
         $admin -> assignRole('admin');
 
+
+
         $user = User::create([
             'email' => 'member@mail.com',
             'password' => bcrypt('member123'),
@@ -36,7 +38,7 @@ class UserSeeder extends Seeder
             'pendidikan' => 'Kuliah',
             'alamat' => 'Jl. Sukadamai No 12'
         ]);
-        $user -> assignRole('member');
+        $user1 -> assignRole('member');
 
         $user2 = User::create([
             'email' => 'ayu@mail.com',
@@ -47,7 +49,7 @@ class UserSeeder extends Seeder
             'pendidikan' => 'Kuliah',
             'alamat' => 'Perum Maju Jaya Blok A1'
         ]);
-        $user -> assignRole('member');
+        $user2 -> assignRole('member');
 
         $user3 = User::create([
             'email' => 'farhan@mail.com',
@@ -58,7 +60,7 @@ class UserSeeder extends Seeder
             'pendidikan' => 'Kuliah',
             'alamat' => 'Jl. Pisangan Lama No, 14'
         ]);
-        $user -> assignRole('member');
+        $user3 -> assignRole('member');
 
         $user4 = User::create([
             'email' => 'lita@mail.com',
@@ -69,7 +71,7 @@ class UserSeeder extends Seeder
             'pendidikan' => 'SMA',
             'alamat' => 'Gg. Sukahati'
         ]);
-        $user -> assignRole('member');
+        $user4 -> assignRole('member');
 
     }
 }

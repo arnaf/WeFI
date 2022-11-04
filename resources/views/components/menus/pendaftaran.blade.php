@@ -3,6 +3,17 @@
 @section('content')
 <main id="main" class="main">
 
+    <div class="pagetitle">
+        <h1>Pendaftaran Bimbel WeFI</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Pendaftaran</li>
+          </ol>
+        </nav>
+    </div>
+
+
     <!-- Main content -->
     <section class="content">
 
@@ -57,7 +68,7 @@
                   <div class="row mb-3">
                     <label for="namaPengajar" class="col-sm-2 col-form-label">Pengajar</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="" id="namaPengajar" name="namaPengajar" disabled>
+                      <input type="text" class="form-control" value=" " id="namaPengajar" name="namaPengajar" disabled>
                     </div>
                   </div>
 

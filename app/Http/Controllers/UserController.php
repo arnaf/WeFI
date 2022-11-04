@@ -16,7 +16,11 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users= DB::table('users')->get();
+        $users= DB::table('users')
+        ->where('id', '>', 2)
+        ->latest('users.created_at')
+        ->get();
+
 
         $data = [
             'roles'    => $users,
@@ -35,7 +39,9 @@ class UserController extends Controller
             return Response::json($data);
         }
 
-        $data = User::where('id', '!=', 1)->get();
+        $data = User::where('id', '>', 2)
+        ->latest('users.created_at')
+        ->get();
 
         return DataTables::of($data)
 

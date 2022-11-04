@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
 use App\Models\Tagihan;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\RiwayatPembayaran;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -20,11 +24,14 @@ class TagihanController extends Controller
 
         $data = [
 
-            'invoice'     => uniqid(),
+            'invoice'     => $invoice,
             'members'     => $members,
             'kelases'     => $kelases,
 
         ];
+
+
+
 
 
 
@@ -36,10 +43,17 @@ class TagihanController extends Controller
     {
 
         $relations = DB::table('tagihans')
-        ->leftjoin('users', 'tagihans.user_id', '=', 'users.id')
-        ->leftJoin('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+            ->join('users', 'tagihans.user_id', '=', 'users.id')
+            ->join('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+            ->select([
+                'tagihans.id', 'users.nama', 'tagihans.invoice', 'kelass.judulkelas', 'kelass.harga', 'tagihans.status', 'tagihans.foto'
+            ])
+            ->where('status', '!=', 'Terbayar')
+            ->where('status', '!=', 'Ditolak')
+            ->latest('tagihans.created_at')
+            ->get();
 
-        ->get();
+
 
 
         $data = [
@@ -47,6 +61,61 @@ class TagihanController extends Controller
         ];
 
         return view('components.menus.tagihan', $data);
+
+    }
+
+
+    public function indexHistorySuccess()
+    {
+
+        $relations = DB::table('tagihans')
+            ->join('users', 'tagihans.user_id', '=', 'users.id')
+            ->join('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+            ->select([
+                'tagihans.id', 'users.nama', 'tagihans.invoice', 'kelass.judulkelas', 'kelass.harga', 'tagihans.status', 'tagihans.foto'
+            ])
+            ->where('status', 'Terbayar')
+            ->latest('tagihans.created_at')
+            ->get();
+
+        $data = [
+            'relations'   => $relations
+        ];
+
+        // $relations = DB::table('tagihans')
+        //     ->join('users', 'tagihans.user_id', '=', 'users.id')
+        //     ->join('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+        //     ->select([
+        //         'tagihans.id', 'users.nama', 'tagihans.invoice', 'kelass.judulkelas', 'kelass.harga', 'tagihans.status', 'tagihans.foto'
+        //     ])
+        //     ->where('status', '!=', 'Terbayar')
+        //     ->where('status', '!=', 'Ditolak')
+        //     ->latest('tagihans.created_at')
+        //     ->get();
+
+
+        return view('components.menus.riwayatsuccess', $data);
+
+    }
+
+    public function indexHistoryFail()
+    {
+
+        $relations = DB::table('tagihans')
+            ->join('users', 'tagihans.user_id', '=', 'users.id')
+            ->join('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+            ->select([
+                'tagihans.id', 'users.nama', 'tagihans.invoice', 'kelass.judulkelas', 'kelass.harga', 'tagihans.status', 'tagihans.foto'
+            ])
+            ->where('status', 'Ditolak')
+            ->latest('tagihans.created_at')
+            ->get();
+
+        $data = [
+            'relations'   => $relations
+        ];
+
+        return view('components.menus.riwayatfail', $data);
 
     }
 
@@ -92,29 +161,98 @@ class TagihanController extends Controller
                 'user_id'         => $request->namaMember,
                 'kelas_id'        => $request->kelasMember,
                 'metode'          => $request->metodeMember,
+
                 'status'          => 'Belum dibayar',
                 'created_at'      => date('Y-m-d H:i:s')
                 ]);
 
             });
-                $tagihan = Tagihan::orderBy('created_at', 'desc')
-                ->take(10)
-                ->get();
+                // $tagihan = Tagihan::orderBy('created_at', 'desc')
+                // ->take(10)
+                // ->get();
 
-                return view('components.menus.tagihan', $tagihan);
+            $relations = DB::table('tagihans')
+            ->join('users', 'tagihans.user_id', '=', 'users.id')
+            ->join('kelass', 'tagihans.kelas_id', '=', 'kelass.id')
+            ->select([
+                'tagihans.id', 'users.nama', 'tagihans.invoice', 'kelass.judulkelas', 'kelass.harga', 'tagihans.status', 'tagihans.foto'
+            ])
+            ->latest('tagihans.created_at')
+            ->get();
 
 
+
+
+        $data = [
+            'relations'   => $relations
+        ];
+
+        if(Auth::user()->id == 1){
+            return redirect()->to('/tagihan');
+        } else {
+            return redirect()->to( route('tagihansaya', Auth::user()->id) );
+        }
     }
 
 
-    public function verification() {
+    public function verificationSuccess($id) {
 
-        DB::transaction(function() {
-            Tagihan::update([
+        DB::transaction(function() use($id) {
+            Tagihan::where('id', $id)
+            ->update([
                 'status' => 'Terbayar'
             ]);
         });
+
+
+
+        return redirect()->to('/success');
     }
 
 
+    public function verificationFail($id) {
+
+        DB::transaction(function() use($id) {
+            Tagihan::where('id', $id)
+            ->update([
+                'status' => 'Ditolak'
+            ]);
+        });
+
+        return redirect()->to('/fail');
+    }
+
+    public function uploadBukti(Request $request, $id){
+
+
+
+        if($request->hasFile('foto')){
+            $extension = $request->file('foto')->getClientOriginalExtension();
+
+            $foto = date('YmdHis').'.'.$extension;
+
+
+            $path = base_path('public/assets/images/bukti');
+
+            $request->file('foto')->move($path, $foto);
+
+            DB::transaction(function() use($foto, $id) {
+                Tagihan::where('id', $id)
+                ->update([
+
+                    'status' => 'Dalam verifikasi Admin',
+                    'foto'  => $foto
+
+                ]);
+
+            });
+        }
+        
+        if(Auth::user()->id == 1){
+        return redirect()->to('/tagihan');
+        } else {
+            return redirect()->to( route('tagihansaya', Auth::user()->id) );
+        }
+
+    }
 }
